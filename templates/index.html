@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تجربة تسجيل الدخول عبر تيليجرام - MORX</title>
+    <style>
+        body {
+            font-family: -apple-system, Tahoma, Arial, sans-serif;
+            background: #0f1117;
+            color: #eee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .card {
+            background: #1a1d27;
+            padding: 40px 30px;
+            border-radius: 16px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        h1 { color: #ff8c00; margin-bottom: 10px; }
+        p { color: #aaa; line-height: 1.6; }
+        img.avatar {
+            width: 80px; height: 80px; border-radius: 50%;
+            margin-bottom: 15px; border: 3px solid #ff8c00;
+        }
+        .info-box {
+            background: #10131a;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: right;
+        }
+        .info-box p { margin: 6px 0; color: #ddd; }
+        a.logout {
+            display: inline-block;
+            margin-top: 20px;
+            color: #ff8c00;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        {% if user %}
+            {% if user.photo_url %}
+                <img class="avatar" src="{{ user.photo_url }}" alt="صورة">
+            {% endif %}
+            <h1>✅ تم تسجيل الدخول!</h1>
+            <div class="info-box">
+                <p><b>الاسم:</b> {{ user.first_name }}</p>
+                <p><b>اليوزرنيم:</b> @{{ user.username or "بدون يوزرنيم" }}</p>
+                <p><b>الـ Telegram ID:</b> {{ user.id }}</p>
+            </div>
+            <p style="margin-top:15px; font-size: 14px;">
+                هذا بالضبط نفس الـ ID يلي بوت MORX بيحفظ فيه رصيدك —
+                يعني لو ربطناها بقاعدة البيانات، رح تشوف نفس رصيدك هون وبالبوت سوا.
+            </p>
+            <a class="logout" href="/logout">تسجيل خروج</a>
+        {% else %}
+            <h1>🛒 MORX — تجربة الدخول</h1>
+            <p>دوس الزر تحت وسجل دخول بحساب تيليجرام تبعك عشان تشوف كيف بتشتغل الفكرة:</p>
+            <div style="margin-top: 20px;">
+                <script async src="https://telegram.org/js/telegram-widget.js?22"
+                    data-telegram-login="{{ bot_username }}"
+                    data-size="large"
+                    data-radius="10"
+                    data-auth-url="/auth"
+                    data-request-access="write">
+                </script>
+            </div>
+            <p style="margin-top: 20px; font-size: 13px; color: #888;">
+                ⚠️ إذا الزر ما ظهر، لازم أول تربط الدومين تبع الموقع بالبوت عبر BotFather (اشرحلك كيف بالرسالة).
+            </p>
+        {% endif %}
+    </div>
+</body>
+</html>
 
